@@ -29,11 +29,13 @@
 
 
 
-### When an interruption occurs...   (fatal error)
+### When an interruption occurs...
 
 This is e.g. the scenario where connection to the database is lost.  Luckily, we can probably work around this and rather than having it crash the server: e.g. have it emit a standard event on the connection as a way to notify the user if they care, and then have all future attempts to send a query on that connection result in failure.  Attempting to acquire a new connection after this should be supported.
 
 
+### Where a fatal interruption or bug occurs...
+Process is killed in this case, so the priority is just to get as much real information spat out as quickly as possible.
 
 
 ### When sending a query...
