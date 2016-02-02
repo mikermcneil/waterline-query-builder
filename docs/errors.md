@@ -5,6 +5,8 @@
 
 ### When attempting to establish first-time connection...
 
+_separate exits from connect machine_
+
 #### Cannot connect to database due to the fact that there's no database server running at the provided host
 > Currently in Waterline: _not consistent across adapters_
 
@@ -40,6 +42,8 @@ Process is killed in this case, so the priority is just to get as much real info
 
 ### When sending a query...
 
+_separate exits from query machine_
+
 #### Logical data type validation failed
 > Currently in Waterline: `E_VALIDATION`
 
@@ -51,15 +55,14 @@ Note that this type of error is completely separate from the underlying data sto
 Note that this type of error is also completely separate from the underlying data store (validation occurs in the node process)
 
 
+### When receiving the outcome/result from a query...
+
+_all of these share a single exit_
+
 #### Connection already died
 > Currently in Waterline: _not consistent across adapters_
 
 Cannot send a query over a connection which is known to be dead (this is known ahead of time because we keep track of it when/if a connection blows up)
-
-
-
-
-### When receiving the outcome/result from a query...
 
 #### Uniqueness constraint failed
 > Currently in Waterline: `E_UNIQUE`
