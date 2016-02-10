@@ -12,15 +12,25 @@ For familiarity the generated SQL query is shown next to each example using the
 PostgreSQL dialect. The equivalent MongoDB query is also shown.
 
 
+## Glossary
+
+| Term         | Definition
+| ------------ | --------------------------------------------------------
+| record       | The basic unit of data in Waterline. Equivalent to a SQL row or a Mongo document.
+| field name   | The name of a property which is extant in all records in a particular collection.  Equivalent to a SQL column name.
+| collection   | A set of (usually) homogeneous records.  Equivalent to a SQL table or Mongo collection.
+
+
+
 ## Query Building
 
 
 ## Selects
 
-Creates a `select` query. Accepts either an array of columns to select or a
+Create a `select` query. Accepts either an array of columns to select or a
 single `'*'` value to represent all values.
 
-**Example of named columns**
+#### Example: select only certain fields
 
 ```javascript
 {
