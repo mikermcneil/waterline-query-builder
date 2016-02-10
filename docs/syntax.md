@@ -91,7 +91,9 @@ db.books.find()
 
 ### Schemas (SQL Only)
 
-You can specify a schema to be used as a prefix of the table name.
+> consider introducing different terminology here (e.g. "namespace" or something- let's talk about it) to avoid confusion (google "schema wiki" to see what I mean)
+
+You can specify a [schema](http://www.tutorialspoint.com/postgresql/postgresql_schema.htm) (in the sense of _a named collection of tables_) to be used as a prefix of the table name.
 
 **Example**
 
