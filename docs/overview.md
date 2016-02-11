@@ -67,8 +67,18 @@ select * from "public"."books"
 
 ```javascript
 // MongoDB    
-db.books.find({}, { title: 1, author: 1, year: 1 })
+db.books.find({}, {})
 ```
 
 Notice that the generated Mongo operation ignores the "schema".  If Mongo had its own concept of a schema, it might handle it completely differently.
+
+
+##### What about something like creating a postgres schema?
+
+That should go directly to mp-postgresql in the form of a different machine (or use the standard native query machine).
+
+
+
+
+
 
