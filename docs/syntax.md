@@ -5,8 +5,8 @@ notation. Through this syntax you should be able to compose complex queries that
 can run on both a SQL data store or a NoSQL data store. The language is completely
 database independent. This acts as an interchange format that can be processed
 by an adapter and interpreted to be run on that particular database. It is highly
-influenced by a relational sequel language but should be normalized enough to
-be converted into NoSql queries as well.
+influenced by the principles of relational databases and the SQL standard but is
+capable of producing NoSql queries as well.
 
 For familiarity the generated SQL query is shown next to each example using the
 PostgreSQL dialect. The equivalent MongoDB query is also shown.
@@ -14,25 +14,37 @@ PostgreSQL dialect. The equivalent MongoDB query is also shown.
 
 ## Glossary
 
-##### Databases
+##### Datastores
+
++ _Compare with [SQL](https://commons.wikimedia.org/wiki/File:SQL_ANATOMY_wiki.svg#/media/File:SQL_ANATOMY_wiki.svg)_
++ _Compare with [Mongo](https://docs.mongodb.org/manual/reference/glossary/#term-aggregation-framework)_
 
 | Term         | Definition
 | ------------ | --------------------------------------------------------
-| record       | The basic unit of data in Waterline. Equivalent to a SQL row or a Mongo document.
+| record       | The basic unit of data in Waterline. Always contains a primary key. Equivalent to a SQL row or a Mongo document.
+| primary key  | A record's unique identifier. Always either an integer or a string.
 | field name   | The name of a property which is extant in all records in a particular collection.  Equivalent to a SQL column name.
-| collection   | A set of (usually) homogeneous records.  Equivalent to a SQL table or Mongo collection.
+| collection   | A set of (at least partially) homogeneous records.  Equivalent to a SQL table or Mongo collection.
+| datastore    | A set of collections. Equivalent to a SQL or Mongo "database".
 
 
 ##### Statements
 
++ _Compare with [SQL](https://commons.wikimedia.org/wiki/File:SQL_ANATOMY_wiki.svg#/media/File:SQL_ANATOMY_wiki.svg)_
++ _Compare with [Mongo](https://docs.mongodb.org/manual/reference/glossary/#term-aggregation-framework)_
 
 | Term         | Definition
 | ------------ | --------------------------------------------------------
 | statement    | e.g. `{ select: ['title', 'author'], from: 'books', where: {title: 'robinson crusoe'} }`
-| clause:  e.g. `from: 'books'` or `select: ['title', 'author']`.
-Expression: e.g. `population + 1`
-Predicate: e.g. `title = 'robinson crusoe'`
+| clause       | e.g. `from: 'books'` or `select: ['title', 'author']`.
+| expression   | e.g. `population + 1`
+| predicate    | e.g. `title = 'robinson crusoe'`
 
+
+
+> PostgreSQL "schemas" are custom to Postgres.  Neither MySQL nor MongoDB supports anything like them. And yet they are more than a namespace or table prefix.  To add to the complexity, "schema" is an extremely overloaded term.
+>
+> I propose we use "schemas" as a test case for passing adapter-specific metadata through RQL.  It does not belong in the core spec.
 
 
 
