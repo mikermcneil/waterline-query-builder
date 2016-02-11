@@ -3,9 +3,9 @@
 
 
 
-## Proposed changes
+### Proposed changes
 
-#### Don't accept `connection` xor `connectionString` -- use two different machines instead
+##### Don't accept `connection` xor `connectionString` -- use two different machines instead
 
 This will make this more declarative and easier to document.
 
@@ -14,9 +14,9 @@ This will make this more declarative and easier to document.
 
 
 
-## Proposed additions
+### Proposed additions
 
-#### A higher-level connection API
+##### A higher-level connection API
 
 ```javascript
 var Postgresql = require('machinepack-postgresql');
@@ -46,7 +46,7 @@ Postgresql.connection({
 ```
 
 
-#### A higher-level transaction API
+##### A higher-level transaction API
 
 ```javascript
 var Postgresql = require('machinepack-postgresql');
