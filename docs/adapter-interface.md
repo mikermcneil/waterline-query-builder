@@ -7,10 +7,13 @@
 - rollbackTransaction()
 - **transaction()**
 - getConnection()
+- releaseConnection()
 - **connect()**
 - **compileQuery()**
 - **sendQuery()**
 - **executeQuery()**
+- **executeNativeQuery()**
+
 
 ### Proposed changes
 
@@ -57,10 +60,14 @@ Postgresql.executeQuery({
 ```
 
 
+##### Change `runQuery` to `sendNativeQuery` for clarity
+
+This is just a rename, and part of what we'll need to do as far as using a single pack anyway.
 
 
 
 ### Proposed additions
+
 
 
 ##### Add `sendQuery`
