@@ -5,7 +5,7 @@
 
 ## Proposed changes
 
-### Don't accept `connection` xor `connectionString` -- use two different machines instead
+#### Don't accept `connection` xor `connectionString` -- use two different machines instead
 
 This will make this more declarative and easier to document.
 
@@ -16,7 +16,7 @@ This will make this more declarative and easier to document.
 
 ## Proposed additions
 
-### A higher-level connection API
+#### A higher-level connection API
 
 ```javascript
 var Postgresql = require('machinepack-postgresql');
@@ -46,7 +46,7 @@ Postgresql.connection({
 ```
 
 
-### A higher-level transaction API
+#### A higher-level transaction API
 
 ```javascript
 var Postgresql = require('machinepack-postgresql');
@@ -75,48 +75,6 @@ Postgresql.transaction({
 });
 ```
 
-
-
-##### Variation: Slightly lower level transaction API
-
-> This probably isn't necessary.
-```javascript
-var Postgresql = require('machinepack-postgresql');
-
-Postgresql.getConnection({ connectionString: '...' }).exec({
-  error: function (err) { /* ... */ },
-  success: function (connection) {
-
-    Postgresql.transaction({
-      connection: connection,
-      transaction: function (inputs, exits){
-        Postgresql.executeQuery({ connection: inputs.connection, query: {} }).exec({
-          error: function(err) { return exits.error(err); },
-          success: function (result) { return exits.success(); }
-        });
-      }
-    }).exec({
-      error: function(err) {
-        // If here, one of the following is true:
-        // - the transaction never started
-        // - rollback already happened
-        // - the rollback was attempted and failed
-        Postgresql.releaseConnection({ connection: connection }).exec({
-          error: function (err) { /* ... */ },
-          success: function () { /* ... */ }
-        });
-      },
-      success: function (resultDataIfRelevant) {
-        // If here, we know the transaction was started, and the commit already happened.
-        Postgresql.releaseConnection({ connection: connection }).exec({
-          error: function (err) { /* ... */ },
-          success: function () { /* ... */ }
-        });
-      }
-    });
-  }
-});
-```
 
 
 
