@@ -14,11 +14,25 @@ PostgreSQL dialect. The equivalent MongoDB query is also shown.
 
 ## Glossary
 
+##### Databases
+
 | Term         | Definition
 | ------------ | --------------------------------------------------------
 | record       | The basic unit of data in Waterline. Equivalent to a SQL row or a Mongo document.
 | field name   | The name of a property which is extant in all records in a particular collection.  Equivalent to a SQL column name.
 | collection   | A set of (usually) homogeneous records.  Equivalent to a SQL table or Mongo collection.
+
+
+##### Statements
+
+
+| Term         | Definition
+| ------------ | --------------------------------------------------------
+| statement    | e.g. `{ select: ['title', 'author'], from: 'books', where: {title: 'robinson crusoe'} }`
+| clause:  e.g. `from: 'books'` or `select: ['title', 'author']`.
+Expression: e.g. `population + 1`
+Predicate: e.g. `title = 'robinson crusoe'`
+
 
 
 
