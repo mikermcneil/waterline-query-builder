@@ -1,13 +1,13 @@
 # Adapter Interface
 
+### Summary
+
 - beginTransaction()
 - commitTransaction()
 - rollbackTransaction()
 - **transaction()**
-
 - getConnection()
 - **connect()**
-
 - **compileQuery()**
 - **sendQuery()**
 - **executeQuery()**
