@@ -73,9 +73,111 @@ db.books.find({}, {})
 Notice that the generated Mongo operation ignores the "schema".  If Mongo had its own concept of a schema, it might handle it completely differently.
 
 
-##### What about something like creating a postgres schema?
+##### What about an operation not supported by RQL at all?
 
-That should go directly to mp-postgresql in the form of a different machine (or use the standard native query machine).
+Some operations have a sole purpose which is not a feature not provided by RQL out of the box (i.e. perhaps it is database-specific, or just a rare query).  These types of operations are achievable using the standard native query machine or get-connection machine.
+
+
+In addition, `mp-postgresql` might also choose to a non-standard machine for the use case.  This is totally fine... as long as the non-standard machine follow conventions of the rest of the standardized machines in the pack; e.g.:
+
+```javascript
+var Postgresql = require('machinepack-postgresql');
+
+Postgresql.getConnection({ connectionString: '...' }).exec({
+  error: function(err) { /* ... */ },
+  success: function (connection){
+    Postgresql.createSchema({ connection: connection, name: 'dogpark' }).exec({
+      error: function(err) { /* ... */ },
+      success: function () {
+        Postgresql.releaseConnection({ connection: connection }).exec({
+          error: function (err) { /* ... */ },
+          success: function () { /* ... */ }
+        });
+      }
+    })
+  }
+});
+```
+
+
+
+
+## Proposals
+
+
+#### A higher-level transaction API
+
+```javascript
+var Postgresql = require('machinepack-postgresql');
+
+Postgresql.transaction({
+  connectionString: '...',
+  transaction: function (inputs, exits){
+    Postgresql.executeQuery({ connection: inputs.connection, query: {} }).exec({
+      error: function(err) { return exits.error(err); },
+      success: function () { return exits.success(); }
+    });
+  }
+}).exec({
+  error: function(err) {
+    // If here, one of the following is true:
+    // - could not get connection
+    // - the transaction never started
+    // - rollback already happened
+    // - the rollback was attempted and failed
+    // - could not release connection
+  },
+  success: function (resultDataIfRelevant) {
+    // If here, we know we connected to the database, that the transaction was started,
+    // that the commit already happened, and that we've released the connection again successfully.
+  }
+});
+```
+
+
+
+
+
+
+#### Slightly lower level transaction API
+```javascript
+var Postgresql = require('machinepack-postgresql');
+
+Postgresql.getConnection({ connectionString: '...' }).exec({
+  error: function (err) { /* ... */ },
+  success: function (connection) {
+
+    Postgresql.transaction({
+      connection: connection,
+      transaction: function (inputs, exits){
+        Postgresql.createSchema({ connection: inputs.connection, name: 'dogpark' }).exec({
+          error: function(err) { return exits.error(err); },
+          success: function () { return exits.success(); }
+        });
+      }
+    }).exec({
+      error: function(err) {
+        // If here, one of the following is true:
+        // - the transaction never started
+        // - rollback already happened
+        // - the rollback was attempted and failed
+        Postgresql.releaseConnection({ connection: connection }).exec({
+          error: function (err) { /* ... */ },
+          success: function () { /* ... */ }
+        });
+      },
+      success: function (resultDataIfRelevant) {
+        // If here, we know the transaction was started, and the commit already happened.
+        Postgresql.releaseConnection({ connection: connection }).exec({
+          error: function (err) { /* ... */ },
+          success: function () { /* ... */ }
+        });
+      }
+    });
+  }
+});
+```
+
 
 
 
