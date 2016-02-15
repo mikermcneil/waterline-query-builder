@@ -1,4 +1,4 @@
-# Adapter Interface
+# Adapter Interface (Machines)
 
 ### Summary
 
