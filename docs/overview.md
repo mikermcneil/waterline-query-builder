@@ -16,7 +16,7 @@
 
 | Term         | Definition
 | ------------ | --------------------------------------------------------
-| record       | The basic unit of data in Waterline. Always contains a primary key. Equivalent to a SQL row or a Mongo document.
+| record       | The basic unit of data in Waterline; a dictionary with multiple keys. Always contains a primary key (e.g. `id`). Equivalent to a SQL row or a Mongo document.
 | primary key  | A record's unique identifier. Always either an integer or a string.
 | column name  | The name of a property which is extant in all records in a particular table.  Equivalent to a SQL column name.
 | table        | A set of (at least partially) homogeneous records.  Equivalent to a SQL table or Mongo collection.
@@ -32,8 +32,8 @@
 | ------------ | --------------------------------------------------------
 | statement    | e.g. `{ select: ['title', 'author'], from: 'books', where: {title: 'robinson crusoe'} }`
 | clause       | e.g. `from: 'books'` or `select: ['title', 'author']`.
-| expression   | e.g. `population + 1`
 | predicate    | e.g. `title = 'robinson crusoe'`
+| expression   | e.g. `'robinson crusoe'`
 
 
 
